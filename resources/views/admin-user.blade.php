@@ -21,7 +21,7 @@
                     @if (count($users)>0)
                     <h3> <strong> Admin Panel</strong></h3> <br>
                     @foreach($users as $user) 
-                    Id = {{$user->id}} | Mail : {{$user->email}}  <a href="{{ route('admin.login.as.user', $user->id) }}" class="w3-btn w3-white w3-border w3-border-red w3-round">Login as User</a> - <a href="{{ route('admin.delete.user', $user->id) }}" class="w3-btn w3-white w3-border w3-border-red w3-round">Delete</a> <br> 
+                    Id = {{$user->id}} | Mail : {{$user->email}}  <a href="{{ route('admin.login.as.user', $user->id) }}" class="w3-btn w3-white w3-border w3-border-red w3-round">Login as User</a> - <a href="{{ route('admin.delete.user', $user->id) }}" class="w3-btn w3-white w3-border w3-border-red w3-round">Delete</a> <a href="{{ route('admin.edit.user', $user->id) }}" class="w3-btn w3-white w3-border w3-border-red w3-round">Edit</a> <br> 
                     @endforeach
                     @endif
 

@@ -46,6 +46,8 @@ Route::group(['prefix' => 'admin'], function() {
     Route::post('/user/create', 'AdminController@createUser')->name('admin.user.register.submit');
     Route::get('user/{id}/login','AdminController@loginAsUser')->name('admin.login.as.user');
     Route::get('user/{id}/delete','AdminController@destroyUser')->name('admin.delete.user');
+    Route::get('user/{id}/edit','AdminController@editUser')->name('admin.edit.user');
+    Route::post('/user/{id}/update', 'AdminController@updateUser')->name('admin.user.update.submit');
     
 
 });

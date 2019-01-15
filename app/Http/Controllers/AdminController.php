@@ -161,5 +161,50 @@ class AdminController extends Controller
         }
 
 
+        public function editUser($id)
+        {
+            $user = User::find($id);
+            
+
+            return view('admin-register-user-edit',['user' => $user]);
+        }
+
+
+        public function updateUser(Request $request,$id)
+        {
+            $this->validate($request, [
+                'first_name' => 'required', 'string', 'max:255',
+                'last_name' => 'required', 'string', 'max:255',
+                'email' => 'required', 'string', 'email', 'max:255', 'unique:users',
+                'password' => 'string', 'min:6', 'confirmed',
+                'tckn' => 'required', 'string', 'size:11', 'unique:users'
+            ]);
+
+          
+
+            $identityCheck = IdentityCheck::soapIdentityCheck($request->tckn,$request->first_name.' '.$request->last_name ,$request->birthyear);
+        
+            // if(!$algorithmCheck){return view('auth.register',['tckn_error' => 'Lütfen Geçerli Bir T.C Kimlik Numarası Girin.']);}
+             if(!$identityCheck){return view('auth.register');['tckn_error' => 'Lütfen Geçerli Kimlik Bilgileri Girin.'];}
+     
+     
+             $user  = User::find($id);
+
+             
+             $user->first_name = $request->first_name;
+             $user->last_name =  $request->last_name;
+             $user->email =$request->email;
+             $user->password = Hash::make($request->password);
+             $user->tckn = $request->tckn;
+             $user->phone = $request->phone;
+             $user->birthyear = $request->birthyear;
+             $user->save();
+
+             return redirect()->route('admin.users'); 
+
+
+        }
+
+
 
 }
