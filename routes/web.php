@@ -50,9 +50,18 @@ Route::group(['prefix' => 'admin'], function() {
     Route::post('/user/{id}/update', 'AdminController@updateUser')->name('admin.user.update.submit');
     
 
+    Route::get('/token',function(){
+
+        return Illuminate\Support\Facades\Auth::user()->createToken('test');
+    });
+
 });
 
 
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
