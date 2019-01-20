@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\IdentityCheck;
+use App\Http\IdentityCheck\IdentityCheck;
 use App\Http\Requests\StoreAndUpdateAdminRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Admin;

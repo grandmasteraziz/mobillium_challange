@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\IdentityCheck;
+use App\Http\IdentityCheck\IdentityCheck;
 use Illuminate\Support\Facades\View;
 use App\User;
 use App\Http\Requests\StoreUserRequest;
@@ -18,9 +18,7 @@ class UserController extends Controller
     {
         $this->middleware('auth:web');
     }
-
-
-  
+ 
 
     public function showMe()
     {
