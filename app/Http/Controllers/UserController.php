@@ -10,6 +10,7 @@ use App\Http\IdentityCheck\IdentityCheck;
 use Illuminate\Support\Facades\View;
 use App\User;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 
 class UserController extends Controller
 {
