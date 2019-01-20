@@ -33,7 +33,7 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request)
     {
          
-       // $this->validator($request->all());
+       
         $identityCheck = IdentityCheck::soapIdentityCheck($request->tckn ,$request->first_name.' '.$request->last_name ,$request->birthyear);
         
         if(!$identityCheck){return view('showMe',['user'=> Auth::user(),'tcknError' => 'Lütfen Geçerli Kimlik Bilgileri Girin.']); }

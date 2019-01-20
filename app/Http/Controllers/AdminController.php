@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\IdentityCheck;
+use App\Http\Requests\StoreAndUpdateAdminRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\Admin;
 use App\User;
 
@@ -45,15 +47,8 @@ class AdminController extends Controller
     }
 
 
-    public function create(Request $request)
-    {
-       
-          //validate the form data 
-        $this->validate($request,[
-            'email' => 'required|email',
-            'password' => 'required|:min:6' 
-        ]);
-        
+    public function create(StoreAndUpdateAdminRequest $request)
+    { 
         $admin = new Admin;
         $admin->email = $request->email;
         $admin->password =  Hash::make($request->password);
@@ -70,15 +65,8 @@ class AdminController extends Controller
     }
 
  
-    public function update(Request $request,$id)
-    {
-        
-
-             //validate the form data 
-             $this->validate($request,[
-                'email' => 'required|email',
-                'password' => 'required|:min:6' 
-            ]);
+    public function update(StoreAndUpdateAdminRequest $request,$id)
+    { 
             
             $admin = Admin::find($id);
             $admin->email = $request->email;
@@ -123,23 +111,14 @@ class AdminController extends Controller
             return redirect()->route('admin.users'); 
         }
 
-        public function showUserRegisterForm(Request $request)
+        public function showUserRegisterForm()
         {
 
             return view('admin-register-user');  
         }
-        public function createUser(Request $request)
+        public function createUser(StoreUserRequest $request)
         {
-            $this->validate($request, [
-                'first_name' => 'required', 'string', 'max:255',
-                'last_name' => 'required', 'string', 'max:255',
-                'email' => 'required', 'string', 'email', 'max:255', 'unique:users',
-                'password' => 'required', 'string', 'min:6', 'confirmed',
-                'tckn' => 'required', 'string', 'size:11', 'unique:users'
-            ]);
-
-          
-
+              
             $identityCheck = IdentityCheck::soapIdentityCheck($request->tckn,$request->first_name.' '.$request->last_name ,$request->birthyear);
         
             // if(!$algorithmCheck){return view('auth.register',['tckn_error' => 'Lütfen Geçerli Bir T.C Kimlik Numarası Girin.']);}
@@ -170,17 +149,8 @@ class AdminController extends Controller
         }
 
 
-        public function updateUser(Request $request,$id)
-        {
-            $this->validate($request, [
-                'first_name' => 'required', 'string', 'max:255',
-                'last_name' => 'required', 'string', 'max:255',
-                'email' => 'required', 'string', 'email', 'max:255', 'unique:users',
-                'password' => 'string', 'min:6', 'confirmed',
-                'tckn' => 'required', 'string', 'size:11', 'unique:users'
-            ]);
-
-          
+        public function updateUser(StoreUserRequest $request,$id)
+        { 
 
             $identityCheck = IdentityCheck::soapIdentityCheck($request->tckn,$request->first_name.' '.$request->last_name ,$request->birthyear);
         
