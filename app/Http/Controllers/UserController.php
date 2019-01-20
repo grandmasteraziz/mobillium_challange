@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\IdentityCheck;
 use Illuminate\Support\Facades\View;
 use App\User;
+use App\Http\Requests\StoreUserRequest;
 
 class UserController extends Controller
 {
@@ -29,9 +30,10 @@ class UserController extends Controller
     }
 
 
-    public function update(Request $request)
+    public function update(UpdateUserRequest $request)
     {
-        $this->validator($request->all());
+         
+       // $this->validator($request->all());
         $identityCheck = IdentityCheck::soapIdentityCheck($request->tckn ,$request->first_name.' '.$request->last_name ,$request->birthyear);
         
         if(!$identityCheck){return view('showMe',['user'=> Auth::user(),'tcknError' => 'Lütfen Geçerli Kimlik Bilgileri Girin.']); }
@@ -53,15 +55,6 @@ class UserController extends Controller
     }
 
 
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'tckn' => ['required', 'string', 'size:11', 'unique:users']
-        ]);
-    }
+   
 
 }

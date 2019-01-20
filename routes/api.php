@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,20 +14,21 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('api/userto', function (Request $request) {
-    return json_encode(array ('a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>5));
-});
+// Route::middleware('auth:api')->get('api/userto', function (Request $request) {
+//     return json_encode(array ('a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>5));
+// });
 
-Route::post('/api/me',function(Request $request){
-    $request->validate([
-        'title' => 'required|unique:posts|max:255',
-        'body' => 'required',
-    ]);
+// Route::post('/api/me',function(Request $req){
+    
+//     //$req->validated();
+ 
+
+//     return json_encode(array ('a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>5));
+// });
 
 
-    return json_encode(array ('a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>5));
-});
+Route::resource('api/user', 'Api\UserController');
 
-Route::get('api/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
+// Route::get('api/user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:api');

@@ -90,6 +90,8 @@ class Handler extends ExceptionHandler
             return $this->errorResponse('The specified URL cannot be found', 404);
         }
 
+       
+
     }
 
 
