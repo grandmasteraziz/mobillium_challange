@@ -2,9 +2,9 @@
 
 namespace App\Http\IdentityCheck;
 
-use Illuminate\Http\Request;
+ 
 
-class IdentityCheck extends Controller{
+class IdentityCheck{
 
    public static function algorithm( $number ){
     	if ( empty($number) ) return false;
@@ -23,7 +23,7 @@ class IdentityCheck extends Controller{
     }
 
     static function soapIdentityCheck( $number  , $fullname , $birtday )
-    {
+    { 
     	if ( empty($fullname)) return false ;
     	if ( !is_numeric($number) ) return false ;
     	if ( strlen($birtday) != 4 ) return false ;

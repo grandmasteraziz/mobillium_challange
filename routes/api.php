@@ -28,7 +28,8 @@ use App\Http\Requests\StoreUser;
 
 
 Route::resource('api/user', 'Api\UserController');
-Route::post('api/auth/registerto', 'Api\AuthController@register');
+Route::post('api/auth/register', 'Api\AuthController@register');
+Route::post('api/auth/login', 'Api\AuthController@login');
 Route::resource('api/auth', 'Api\AuthController');
 
 // Route::get('api/user', function (Request $request) {
