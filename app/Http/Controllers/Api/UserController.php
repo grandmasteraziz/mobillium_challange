@@ -3,21 +3,29 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Http\Requests\StoreUserRequest;
 
-class UserController extends Controller
+class UserController extends ApiController
 {
  
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index(Request $request)
+    { 
+
+        $user = $request->user();
+        
+
+        return response()->json($user->id);
     }
 
     /**

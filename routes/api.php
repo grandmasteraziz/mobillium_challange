@@ -27,9 +27,11 @@ use App\Http\Requests\StoreUser;
 // });
 
 
-Route::resource('api/user', 'Api\UserController');
+
 Route::post('api/auth/register', 'Api\AuthController@register');
 Route::post('api/auth/login', 'Api\AuthController@login');
+Route::get('api/auth/logout', 'Api\AuthController@logout');
+Route::get('api/user/me', 'Api\UserController@index');
 Route::resource('api/auth', 'Api\AuthController');
 
 // Route::get('api/user', function (Request $request) {

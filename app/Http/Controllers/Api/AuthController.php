@@ -59,4 +59,11 @@ class AuthController extends ApiController
         return response()->json(['message'=>'Unauthorised','code' => 401], 401); 
     }  
  
+    public function logout(Request $request)
+    {
+        $request->user()->token()->revoke();
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
+    }
 }
