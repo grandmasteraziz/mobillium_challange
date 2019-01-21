@@ -4,7 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
+use App\Http\Requests\UpdateUserRequest; 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\IdentityCheck\IdentityCheck;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth; 
+use App\User;
 
 class UserController extends ApiController
 {
@@ -22,10 +27,9 @@ class UserController extends ApiController
     public function index(Request $request)
     { 
 
-        $user = $request->user();
         
 
-        return response()->json($user->id);
+        return response()->json($request->user());
     }
 
     /**
@@ -83,9 +87,46 @@ class UserController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
-        //
+       
+       $authUser = Auth::user(); 
+       $count = 0;
+
+       if($authUser->id != $id)
+       {
+         return response()->json(['message'=>'Unauthorised','code' => 401], 401); 
+       }
+
+       if($authUser->tckn != $request->tckn){ $count++; }
+       if($authUser->first_name != $request->first_name){ $count++; }
+       if($authUser->last_name != $request->last_name){ $count++; }
+       if($authUser->birthyear != $request->birtyear){ $count++; }
+       
+       if($count > 0)
+       {
+            $identityCheck = IdentityCheck::soapIdentityCheck($request->tckn,$request->first_name.' '.$request->last_name ,$request->birthyear);  
+   
+            if(!$identityCheck){return response()->json(["message"=>"tckn error","code" => 403],403);}         
+       }
+ 
+      
+ 
+       $user = User::find(Auth::id());
+       $user->first_name = $request->first_name;
+       $user->last_name = $request->last_name;
+       $user->email = $request->email;
+       $user->password = Hash::make($request->password);
+       $user->tckn = $request->tckn;
+       $user->phone = $request->phone;
+       $user->birthyear = $request->birthyear;
+      
+       $user->save();
+
+       var_dump($user);
+       die();
+
+       return response()->json($user,202);
     }
 
     /**

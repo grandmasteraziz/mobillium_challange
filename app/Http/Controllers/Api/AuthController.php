@@ -21,7 +21,7 @@ class AuthController extends ApiController
       
         $identityCheck = IdentityCheck::soapIdentityCheck($request->tckn,$request->first_name.' '.$request->last_name ,$request->birthyear);
        
-        // if(!$algorithmCheck){return view('auth.register',['tckn_error' => 'Lütfen Geçerli Bir T.C Kimlik Numarası Girin.']);}
+        
          if(!$identityCheck){ return response()->json(["message"=>"tckn error"],403); }
         
         
